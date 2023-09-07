@@ -1,0 +1,82 @@
+{{ block title }}
+    Sliders
+{{ endblock }}
+{{ block content }}
+
+    <style>
+        .mgslider-wrapper {
+            border-spacing: 10px;
+            width: 100%;
+        }
+        .mgslider-limit {
+            width: 0;
+            min-width: 75px;
+            height: 40px;
+            margin: 0;
+        }
+        .mgslider-limit, .mgslider-value {
+            font-variant-numeric: tabular-nums;
+        }
+        .mgslider-limit, .mgslider-value_max {
+            font-variant-numeric: tabular-nums;
+        }
+        .mgslider-before {
+            height: 16px;
+            width: 100%;
+            background: #1e5bff;
+            display: block;
+            margin: 0 auto;
+        }
+        .mgslider-feedback {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size:1.5em
+        }
+        .mgslider-limit {
+            border: none;        /* 移除边框 */
+            outline: none;       /* 移除轮廓，以防万一 */
+            background: none;    /* 保证没有背景 */
+            box-shadow: none;    /* 移除任何阴影 */
+        }
+        .rightalign {
+            text-align: right;
+        }
+        .mgslider-limit_max {
+            width: 0;
+            min-width: 75px;
+            height: 40px;
+            margin: 0;
+            text-align: right;
+    </style>
+
+<!-- 表单template -->
+    {{ formfield_errors 'number' }}
+    <input type="hidden" name="check" id="id_check" value="{{ player.check }}">
+<!-- 表单template -->
+
+    <p>青いバーをクリックして、スライダーを表示してください。</p>
+
+    <div id="sliders_here"></div>
+
+<!-- input the slider and define the parameter when users dont click -->
+    <script src="{{ static 'mgslider.js' }}"></script>
+    <!-- the function is the prototype function, it use the reveal() define in mgslider.js -->
+    <script>
+    mgslider.prototype.handleBlueBarClick = function() {
+        document.getElementById("id_check").value = "1";
+        this.reveal();  // Call the original reveal function
+    };
+    </script>
+<!-- do not change the sequence of the two -->
+
+    <script>
+        $(document).ready(function (event) {
+            slider = new mgslider("number", 0, 100, 1);
+            slider.print(document.getElementById("sliders_here"));
+        });
+    </script>
+
+    {{ next_button }}
+
+{{ endblock }}
